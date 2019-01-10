@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+        <title>Jbourgoin's p209 Ex#1</title>
+        <script type="text/javascript">
+            /*  Do something fun with the buttons */
+          </script>
+<style>
+.header { 
+  background-color: olivedrab;
+  color: black; 
+  font-size: 24px;
+  font-weight: bold;
+  width: auto;
+  padding: 10px;
+}
+.gameboard{
+  width: 631px;
+}
+#map { 
+  background-image: url("map.jpg");
+  position: relative;
+  height: 500px;
+  width: 500px;
+  padding: 0;
+  margin: 0;
+}
+
+#button-bar { 
+  background-color:darksalmon;
+  text-align: center;
+  height: 500px;
+  float: left;
+  margin: 0 0 0 500px;
+}
+
+#sprite { 
+  background-image: url("sprite.png");
+  background-color: transparent;
+  position: absolute;
+  top: 210px;
+  left: 185px;
+  height: 64px;
+  width: 62px;
+  margin: 0;
+}
+
+.footer { 
+  background-color: rgb(187, 185, 55);
+  color: black; 
+  text-align: center;    
+  font-weight: bold;
+  font-size: 24px;
+  clear: left;
+  height: 50px;
+}
+</style>
+  </head>
+  <body>
+    <!--  Gameboard is used to set max width for header and footer divs-->
+    <div class="gameboard">
+      
+      <!--  Header -->
+      <div class="header">Grand Hawaiian Tour</div>
+      
+      <!--  Button Bar  -->
+      <div id="button-bar">
+        <p>Column 'o buttons</p>
+        <button type="button" onclick="/*function1()*/">Click to play!</button>
+      </br>
+    </br>
+        <button type="button" onclick="/*function2()*/">Throw in the Towel!</button>
+      </div>
+      
+      <!--  MAP Background Image via CSS  -->
+      <div id="map"></div>
+      
+      <!--  Adventure Buddy Sprite  -->
+      <div id="sprite"></div>
+      
+      <!--  Footer  -->
+      <div class="footer">Copyright &copy; BC Game Demons</div>
+  </div>
+  </body>
+</html>
