@@ -28,4 +28,4 @@ function min(firstnum, secondnum){
     else {
         console.log("Numbers are equal!");
     }
-}
+};
