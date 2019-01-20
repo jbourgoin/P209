@@ -20,12 +20,12 @@ min(240, 918); // Will return the value of 240
 
 function min(firstnum, secondnum){
     if(firstnum < secondnum){
-        console.log(firstnum)
+        console.log(firstnum);
     }
     else if (firstnum > secondnum) {
-        console.log(secondnum)
+        console.log(secondnum);
     }
     else {
-        console.log("Numbers are equal!")
+        console.log("Numbers are equal!");
     }
 }

@@ -6,12 +6,12 @@ https://code.visualstudio.com/docs/nodejs/nodejs-tutorial
 
 for(var i = 0; i < 300; i++){
     if(i % 5){
-        console.log("Fizz")
+        console.log("Fizz");
     }
     else if (i % 7){
-        console.log("Fuzz")
+        console.log("Fuzz");
     }
     else {
         console.log(i+1);
     }
-}
+};
