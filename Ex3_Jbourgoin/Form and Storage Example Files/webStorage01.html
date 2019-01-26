@@ -9,6 +9,20 @@
 <link href="webStorage_Style.css" type="text/css" rel="stylesheet" />
 
 <script>
+
+		// LocalStorage and variables made by Joseph
+			//::TODO:: Refactor Radio Button 1 and 2 into one answer: yes/no
+		//			   also add a fourht field if necessary..
+		// added 2 radio buttons: id= radioButton1 & radioButton2
+			//("rBtn1Val",radioButton1)
+			//("rBtn2Val",radioButton2)
+
+		// added 1 select menu: id= dropDown
+			//("theDropDown",dropDown)
+
+		// added 1 text field: id= orderName
+			//("theOrderName",OrderName)
+
 window.addEventListener("load",init);
 
 function init(){
@@ -26,11 +40,17 @@ function init(){
 }
 
 function saveInfo(){
-	var city=document.getElementById("city").value;
+	var radioButton1=document.getElementById("radioButton1").value;
+	var radioButton2=document.getElementById("radioButton2").value;
+	var dropDown=document.getElementById("dropDown").value;
+	var orderName=document.getElementById("orderName").value;
 	var comments=document.getElementById("comments").value;
 	
-	localStorage.setItem("cityName",city);
-	localStorage.setItem("userComments",comments);
+	localStorage.setItem("rBtn1Val",radioButton1);
+	localStorage.setItem("rBtn2Val",radioButton2);
+	localStorage.setItem("theDropDown",dropDown);
+	localStorage.setItem("theOrderName",orderName);
+	localStorage.setItem("theUserComments",comments);
 	
 	
 	display();
@@ -39,13 +59,26 @@ function saveInfo(){
 
 function display(){
 	var rightBox=document.getElementById("useroutput");
-	var theCity=localStorage.getItem("cityName");
-	var theComments=localStorage.getItem("userComments");
+
+	var outputTitle = "./ Electronic Doughnuts Order Conformation "
+
+	var radioButton1=localStorage.getItem("rBtn1Val");
+	var radioButton2=localStorage.getItem("rBtn2Val");
+	// checks for radio button selection, stuffs value into 'commmon variable' for html output. a switch might be cleaner?
+	if(radioButton1 !== null && radioButton1 === "Yes"){
+		var coffee = radioButton1;
+	}
+	else{
+		var coffee = radioButton2;
+	}
+	var dropDown=localStorage.getItem("theDropDown");
+	var orderName=localStorage.getItem("theOrderName");
+	var theUserComments=localStorage.getItem("theUserComments");
 	
-	if(theComments==undefined){
+	if(theUserComments==undefined){
 		document.getElementById("useroutput").innerHTML="";
 	}
-	else{ document.getElementById("useroutput").innerHTML="OUTPUT  <hr /><br /><br />The City: "+theCity+"<br /><br />  The Weather: "+theComments;
+	else{ document.getElementById("useroutput").innerHTML=outputTitle+"<hr /><br /><h1>Order Summary:</h1><br /><br />Name of Order: "+orderName+"<br /><br />Complimentary Coffee: "+coffee+"<br /><br />How Many Doughnuts?: "+dropDown+"<br /><br />Special Requests:<br />"+theUserComments;
 	}
 	
 }
@@ -60,25 +93,46 @@ function display(){
 
 <div id="main">
 	<section id="userinput">
-    INPUT <br>
+   ./ Electronic Doughnuts Online Orders <br>
 	<hr />
     <br /><br />
     <form>
-    
-    <div>City: <br /><input type="input" id="city" size="20"></div>
-    <br />
-    <div>Weather:<br /> <textarea id="comments" rows="10"></textarea></div>
-    <br />
-     <div><input type="button" id="button" value="Save"></div>
+    <!-- 
+		// html5 changes made by Joseph
+		// added 2 radio buttons: id= radioButton1 & radioButton2
+		// added 1 select menu: id= dropDown
+		// added 1 text field: id= orderName
+	-->
+	<div>
+		<label for="orderName">Order Name:</label>
+		<input id="orderName" type="text"></input>
+	</div>
+	<br />
+	<div>Select your doughnut batch size: <br />
+		<select id="dropDown">
+			<option	value="One Dozen">One Dozen</option>
+			<option	value="Two Dozen">Two Dozen</option>
+			<option	value="Three Dozen">Three Dozen</option>
+			<option	value="Four Dozen">Four Dozen</option>
+		</select></div>
+	<br />
+
+	<div>Would you want a complimentary flask of coffee with delivery? <br />
+		Yes:<input type="radio" id="radioButton1" name="radioSet" value="Yes">
+		No:<input type="radio" id="radioButton2" name="radioSet" value="No">
+	</div>
+	<br />
+
+    <div>Special Order Requests:<br /> <textarea id="comments" rows="10"></textarea></div>
+	<br />
+    	<div><input type="button" id="button" value="Save"></div>
     
     </form>
     </section>
     
     
     <section id="useroutput">
- OUTPUT  
- 	<hr />
-    <br /><br />
+
     </section>
 
 </div>
