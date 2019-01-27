@@ -11,17 +11,16 @@
 <script>
 
 		// LocalStorage and variables made by Joseph
-			//::TODO:: Refactor Radio Button 1 and 2 into one answer: yes/no
-		//			   also add a fourht field if necessary..
 		// added 2 radio buttons: id= radioButton1 & radioButton2
-			//("rBtn1Val",radioButton1)
-			//("rBtn2Val",radioButton2)
-
+			//("theRadioButton",radioButton)
 		// added 1 select menu: id= dropDown
 			//("theDropDown",dropDown)
-
 		// added 1 text field: id= orderName
 			//("theOrderName",OrderName)
+		// added 5 checkboxes name= doughnutSelector
+			//("theDoughnutList",doughnutList)
+		// function getCheckBoxes
+		// some JS style statements to add image and place it nicely
 
 window.addEventListener("load",init);
 
@@ -40,60 +39,87 @@ function init(){
 }
 
 function saveInfo(){
-	var radioButton1=document.getElementById("radioButton1").value;
-	var radioButton2=document.getElementById("radioButton2").value;
+
+	// checks for radio button selection, stuffs value into 'commmon variable' for html output.
+	if(document.getElementById("radioButton1").checked) {
+		var radioButton = "Yes";
+	}
+	else if(document.getElementById("radioButton2").checked) {
+		var radioButton = "No";
+	}
+
+	//check which checkboxes are checked
+	function getCheckBoxes(chxboxName){
+		var checkboxes = document.getElementsByName(chxboxName);
+		var checkBoxesChecked = [];
+		// loop over them all
+		for(var i = 0; i < checkboxes.length; i++){
+			// And stick the checked ones onto an array...
+			if(checkboxes[i].checked){
+				checkBoxesChecked.push(checkboxes[i].value);
+			}
+		}
+		// Return the array if it is non-empty, or null (Thanks StackOverflow!)
+		return checkBoxesChecked.length > 0 ? checkBoxesChecked : null;
+	}
+	//calling the getcheckboxes function
+	var checkedBoxes = getCheckBoxes("doughnutSelector");
+	//turning the string array into a string "sentence" of selected values
+	var doughnutList = checkedBoxes.toString();
+
 	var dropDown=document.getElementById("dropDown").value;
 	var orderName=document.getElementById("orderName").value;
 	var comments=document.getElementById("comments").value;
-	
-	localStorage.setItem("rBtn1Val",radioButton1);
-	localStorage.setItem("rBtn2Val",radioButton2);
+
+	localStorage.setItem("theDoughnutList",doughnutList);
+	localStorage.setItem("theRadioButton",radioButton);	
 	localStorage.setItem("theDropDown",dropDown);
 	localStorage.setItem("theOrderName",orderName);
 	localStorage.setItem("theUserComments",comments);
-	
-	
+
+	//surprise image on submit :)
+	document.getElementById("useroutput").style.backgroundImage = "url('https://cleverneighbor.com/wp-content/uploads/2016/11/IMG_3188-1080x810.jpg')";
+	document.getElementById("useroutput").style.backgroundPosition = "bottom center";
+	document.getElementById("useroutput").style.backgroundSize = "auto";
+
 	display();
 	
 }
 
 function display(){
+	
 	var rightBox=document.getElementById("useroutput");
-
-	var outputTitle = "./ Electronic Doughnuts Order Conformation "
-
-	var radioButton1=localStorage.getItem("rBtn1Val");
-	var radioButton2=localStorage.getItem("rBtn2Val");
-	// checks for radio button selection, stuffs value into 'commmon variable' for html output. a switch might be cleaner?
-	if(radioButton1 !== null && radioButton1 === "Yes"){
-		var coffee = radioButton1;
-	}
-	else{
-		var coffee = radioButton2;
-	}
+	var outputTitle = "./ Electronic Doughnuts Order Conformation ";
+	
+	var doughnutList = localStorage.getItem("theDoughnutList")
+	var radioSet = localStorage.getItem("theRadioButton");
 	var dropDown=localStorage.getItem("theDropDown");
 	var orderName=localStorage.getItem("theOrderName");
 	var theUserComments=localStorage.getItem("theUserComments");
 	
+	// checks for radio button selection, stuffs value into 'commmon variable' for html output.
+	if(radioSet == "Yes"){
+		var coffee = radioSet;
+	}
+	else if (radioSet == "No"){
+		var coffee = radioSet;
+	}
+	
 	if(theUserComments==undefined){
 		document.getElementById("useroutput").innerHTML="";
 	}
-	else{ document.getElementById("useroutput").innerHTML=outputTitle+"<hr /><br /><h1>Order Summary:</h1><br /><br />Name of Order: "+orderName+"<br /><br />Complimentary Coffee: "+coffee+"<br /><br />How Many Doughnuts?: "+dropDown+"<br /><br />Special Requests:<br />"+theUserComments;
+	else{ document.getElementById("useroutput").innerHTML=outputTitle+"<hr /><br /><h1>Order Summary:<br/>"+doughnutList+". </h1><br /><br />Name of Order: "+orderName+"<br /><br />Complimentary Coffee: "+coffee+"<br /><br />How Many Doughnuts?: "+dropDown+"<br /><br />Special Requests:<br />"+theUserComments;
 	}
 	
 }
 
 </script>
-
-
-
 </head>
 
 <body>
-
 <div id="main">
 	<section id="userinput">
-   ./ Electronic Doughnuts Online Orders <br>
+   ./ Electronic Doughnuts Online Orders<br>
 	<hr />
     <br /><br />
     <form>
@@ -102,13 +128,22 @@ function display(){
 		// added 2 radio buttons: id= radioButton1 & radioButton2
 		// added 1 select menu: id= dropDown
 		// added 1 text field: id= orderName
+		// added 5 checkboxes: name= doughnutSelector
 	-->
 	<div>
 		<label for="orderName">Order Name:</label>
 		<input id="orderName" type="text"></input>
 	</div>
 	<br />
-	<div>Select your doughnut batch size: <br />
+	<div><form action=""><label for="doughnutSelector">Select your doughnuts below:<br></label>
+		<input type="checkbox" name="doughnutSelector" value="Apple Fritter">Apple Fritter<br>
+		<input type="checkbox" name="doughnutSelector" value="Maple Bar">Maple Bar<br>
+		<input type="checkbox" name="doughnutSelector" value="Old Fashion">Old Fashion<br>
+		<input type="checkbox" name="doughnutSelector" value="Classic Cake">Classic Cake<br>
+		<input type="checkbox" name="doughnutSelector" value="Seahawks Sprinkles">Seahawks Sprinkles<br>
+	</form></div>
+	<br />
+	<div><label for= "dropDown">Select your doughnut batch size:</label><br />
 		<select id="dropDown">
 			<option	value="One Dozen">One Dozen</option>
 			<option	value="Two Dozen">Two Dozen</option>
@@ -116,28 +151,20 @@ function display(){
 			<option	value="Four Dozen">Four Dozen</option>
 		</select></div>
 	<br />
-
-	<div>Would you want a complimentary flask of coffee with delivery? <br />
+	<div><label for="radioSet">Would you want a complimentary flask of coffee with delivery?</label><br />
 		Yes:<input type="radio" id="radioButton1" name="radioSet" value="Yes">
 		No:<input type="radio" id="radioButton2" name="radioSet" value="No">
 	</div>
 	<br />
-
-    <div>Special Order Requests:<br /> <textarea id="comments" rows="10"></textarea></div>
+    <div><label for="comments">Special Order Requests:</label><br /> <textarea id="comments" rows="10"></textarea></div>
 	<br />
     	<div><input type="button" id="button" value="Save"></div>
-    
     </form>
     </section>
-    
-    
+        
     <section id="useroutput">
 
     </section>
-
 </div>
-
-
-
 </body>
 </html>
