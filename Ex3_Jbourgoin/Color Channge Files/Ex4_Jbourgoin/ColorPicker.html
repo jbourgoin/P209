@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css"></link>
+    <title>exercise 5</title>
+</head>
+<body>
+    <div id="container">
+        <form autocomplete="off">
+            <h1>Joseph's Color Picker</h1>
+            <br/>
+            <p>Enter a number between 0-255 into each box and then press submit to see the color you've selected!</p><br/>
+            <label for="redClr">Red Color</label>
+            <input type="text" id="redClr" maxlength="3" size="5" placeholder=" 0 - 255 " align="right">
+            <label for="greenClr">Green Color</label>
+            <input type="text" id="greenClr" maxlength="3" size="5" placeholder=" 0 - 255 " align="center">
+            <label for="blueClr">Blue Color</label>
+            <input type="text" id="blueClr" maxlength="3" size="5" placeholder=" 0 - 255 " align="left"><br/>
+        </form>
+        <div id="colorbox"></div>
+            <button id="submit">Submit</button> <button id="reset">Reset</button>
+	</div>
+<script src="ColorPicker.js"></script>
+</body>
+</html>
