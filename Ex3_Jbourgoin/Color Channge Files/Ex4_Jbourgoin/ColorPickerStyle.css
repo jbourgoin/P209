@@ -16,17 +16,11 @@ body {
 	padding: 10px 30px;
 }
 
-#colorBox {
-	width: 80px;
-	height:60px;
+#colorBar {
+	width: 400px;
+	height: 50px;
+	background-color: OldLace;
 	border: 1px solid LightGray;
-	float:left;
-	margin-right: 15px;
-	text-align: center;
-}
-
-button {
-	margin-left: 10px;
 }
 
 input {
