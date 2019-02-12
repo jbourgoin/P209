@@ -25,6 +25,10 @@ let DOWN = 40;
 let RIGHT = 39;
 let LEFT = 37;
 
+// Ufo controls
+let keyW = 87;
+let keyZ = 90;
+
 // rocket object
 let rocket = {
  img: document.querySelector("#rocket"),
@@ -41,23 +45,23 @@ const fireBtn = document.querySelector("#fire");
 
 // ufo object
 let ufo = {
-    img: document.querySelector("#ufo"),
-    x: 125,
-    y: 90,
-    width: 100
+ img: document.querySelector("#ufo"),
+ x: 125,
+ y: 90,
+ width: 100
 };
 
 //sound object
-const audio = new Audio('Gun-Silencer-SoundBible.com-193331132.mp3');
+const audio = new Audio("Gun-Silencer-SoundBible.com-193331132.mp3");
 
 // Initialize objects on the screen
-render( );
+render();
 
 startBtn.addEventListener("click",startGameHandler,false);
 fireBtn.addEventListener("click",fireTorpedoHandler,false);
 window.addEventListener("keydown",keydownHandler,false);
 
-function startGameHandler( ) {
+function startGameHandler() {
 "use strict";
 // Hide the intro screen, show the game screen
 introScreen.style.display = "none";
@@ -66,7 +70,7 @@ rocket.img.style.display = "block";
 ufo.img.style.display = "block";
 }
 
-function fireTorpedoHandler( ) {
+function fireTorpedoHandler() {
  "use strict";
  // Fire the photon torpedo!
  // CSS animation occurs whenever torpedo
@@ -88,7 +92,7 @@ if (event.keyCode == UP) {
 if (event.keyCode == LEFT) {
  rocket.x -= velocity;
 }
-if (event.keyCode === DOWN) {
+if (event.keyCode == DOWN) {
  rocket.y += velocity;
 }
 if (event.keyCode == RIGHT) {
@@ -96,17 +100,17 @@ if (event.keyCode == RIGHT) {
 }
 
 // ufo directional directives
-if(event.keyCode == 87) {
+if(event.keyCode == keyW) {
  ufo.x += velocity;
 }
-if(event.keyCode == 90) {
+if(event.keyCode == keyZ) {
  ufo.y += velocity;
 }
 
-render( );
+render();
 }
 
-function render( ) {
+function render() {
  "use strict";
  // position objects on the screen
  rocket.img.style.left = rocket.x + "px";
