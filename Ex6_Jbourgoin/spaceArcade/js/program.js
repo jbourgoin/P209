@@ -16,7 +16,6 @@ Optional:
 [x]- Increase the speed of the spaceship.
 
 []- Update at least one function into arrow function syntax.
-
 */
 
 // Arrow key codes
