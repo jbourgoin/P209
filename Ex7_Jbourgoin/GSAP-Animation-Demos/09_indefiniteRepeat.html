@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>GSAP Demos</title>
+    <style>
+
+        body { margin-top:100px;}
+        #clouds  { 
+            position: absolute;  
+            background: url("img/clouds.jpg") repeat-x 0 0;
+            width: 650px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div id="clouds"></div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script>
+		var idClouds = document.getElementById('clouds');
+		
+		var t2 = new TimelineMax({repeat: -1});    // repeats timeline indefinitely
+		
+		t2.to(idClouds, 65, {backgroundPositionX: 649, ease: Power0.easeOut});
+	</script>
+
+</body>
+</html>

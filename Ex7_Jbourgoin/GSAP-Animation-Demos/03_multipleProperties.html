@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>GSAP Demos</title>
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 110%;
+		}
+		#container {
+			width: 700px;
+			height: 200px;
+			background-color: steelblue;
+			margin: 40px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		#txt1 {
+			font-size: 2.5em;
+			font-weight: bold;
+			position: absolute;
+			width: 500px;
+			color: white;
+			text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+		}
+		
+	</style>
+	
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="txt1">JavaScript Rules!</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+	<script>
+		
+	var idTxt1 = document.getElementById("txt1");
+		
+	/* Some properties you can animate: 
+	   x             
+	   y		      
+	   rotation
+	   scale
+	   scaleX
+	   scaleY
+	   skewX
+	   skewY
+	   rotationX
+	   rotationY
+	   opacity */
+		
+	TweenLite.to(idTxt1, 5, {left: 400, top: 200, rotation: 360, opacity: 0 } );
+		
+	</script>
+</body>
+</html>

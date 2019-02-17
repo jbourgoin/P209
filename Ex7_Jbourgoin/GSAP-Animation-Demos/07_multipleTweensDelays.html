@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>GSAP Demos</title>
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 110%;
+		}
+		#container {
+			width: 700px;
+			height: 200px;
+			background-color: #c51225;
+			margin: 40px auto;
+			position: relative;
+			overflow: hidden;
+			opacity: 0;
+		}
+		.txt {
+			font-size: 3em;
+			font-weight: bold;
+			position: absolute;
+			width: 700px;
+			text-align: center;
+			top: 60px;
+			left: 0px;
+			color: white;
+			text-shadow: 3px 3px 8px rgba(0,0,0,0.5);			
+		}
+		#img {
+			top: 30px;
+		}
+		img {
+			width:520px;
+		}
+	</style>
+	
+</head>
+
+<body>
+
+	<div id="container">
+		<div class="txt" id="txt1">SAW THE TRAIN AND</div>
+		<div class="txt" id="txt2">TRIED TO DUCK IT</div>
+	    <div class="txt" id="txt3">KICKED FIRST THE GAS</div>
+		<div class="txt" id="txt4">AND THEN</div>
+		<div class="txt" id="txt5">THE BUCKET</div>
+		<div class="txt" id="img"><img src="img/burmashave.jpg" alt="Burma Shave sign"></div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineLite.min.js"></script>
+	<script>
+		
+	var idContainer = document.getElementById("container");
+	var idTxt1 = document.getElementById("txt1");
+	var idTxt2 = document.getElementById("txt2");
+	var idTxt3 = document.getElementById("txt3");
+	var idTxt4 = document.getElementById("txt4");
+	var idTxt5 = document.getElementById("txt5");
+	var idImg  = document.getElementById("img");
+		
+	/* Go to greensock.com/ease-visualizer
+	   to see all the different ways you can use easing
+	   to alter the behavior of the animation */
+		
+	var tl1 = new TimelineLite();	
+		
+	tl1.to(idContainer,1,{opacity:1})
+	   .from(idTxt1, 1, { x: -700, ease:Back.easeOut } )
+	   .to(idTxt1, 1, {delay: 1, x: 1000, ease:Back.easeIn } )
+	   .from(idTxt2, 1, {x: -700, ease:Back.easeOut } )
+	   .to(idTxt2, 1, {delay: 1, x: 1000, ease:Back.easeIn })
+	   .from(idTxt3, 1, {x: -700, ease:Back.easeOut } )
+	   .to(idTxt3, 1, {delay: 1, x: 1000, ease:Back.easeIn })
+	   .from(idTxt4, 1, {x: -700, ease:Back.easeOut } )
+	   .to(idTxt4, 1, {delay: 1, x: 1000, ease:Back.easeIn })
+	   .from(idTxt5, 1, {x: -700, ease:Back.easeOut }, "test")
+	   .to(idTxt5, 1, {delay: 1, x: 1000, ease:Back.easeIn })
+	   .from(idImg, 1, {scale: 0, opacity: 0, ease:Back.easeOut},"-=0.5");
+		
+	  //tl1.seek("test");
+	</script>
+</body>
+</html>

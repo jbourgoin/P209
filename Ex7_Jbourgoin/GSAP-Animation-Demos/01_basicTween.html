@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>GSAP Demos</title>
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 110%;
+		}
+		#container {
+			width: 700px;
+			height: 200px;
+			background-color: steelblue;
+			margin: 40px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		#txt1 {
+			font-size: 2.5em;
+			font-weight: bold;
+			position: absolute;
+			width: 500px;
+			color: white;
+			text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+		}
+		
+	</style>
+	
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="txt1">JavaScript Rules!</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+	<script>
+		
+	var idTxt1 = document.getElementById("txt1");
+		
+	/* To tween an object, you need 3 pieces:
+	   1) the object you want to tween
+	   2) the time in seconds the tween will last
+	   3) an object containing all the properties you want to tween */
+		
+	TweenLite.to(idTxt1, 3, {left: 900} );
+		
+	</script>
+</body>
+</html>

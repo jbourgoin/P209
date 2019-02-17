@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>TweenLite Demo</title>
+    <style>
+		#wrapper {
+			width: 750px;
+			height: 200px;
+			background-color: rgba(0,0,255,0.1);
+			margin: 20px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		#sprite {
+			width: 64px;
+			height: 64px;
+			background-color: red;
+			border-radius: 32px;
+			position: absolute;
+			left: 1000px;   top: 50px;
+		}
+	</style>
+    <!--CDN links for TweenLite, CSSPlugin, and EasePack-->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineMax.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+</head>
+
+<body>
+	<div id="wrapper">
+    	<div id="sprite"></div>
+    </div>
+    <script>
+		window.onload = function() {
+			var sprite = document.getElementById('sprite');
+		
+			/*
+				The repeat property is only available with the TimelineMax or TweenMax libraries)
+				repeat: n will repeat the timeline n number of times
+				repeat: -1 will repeat the timeline indefinitely (good for slow moving background images)
+			*/
+			var tl = new TimelineMax({repeat: 3});    // animation runs 4 times   
+
+			tl.from( sprite, 2, { left: -200 } );
+		};
+	</script>
+</body>
+</html>

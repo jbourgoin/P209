@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Basic Tween Demo</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:800" rel="stylesheet">
+   <style>
+		body {
+			padding: 0; 
+			margin: 0;
+			font-family: 'Open Sans', sans-serif;
+		}
+		#container {
+			width: 800px;
+			height: 200px;
+			margin: 30px auto;
+			background-color: rgba(0,0,255,0.1);
+		}
+		#txt {
+			font-size: 2em;
+		}
+	
+	</style>
+</head>
+
+<body>
+	<div id="container">
+    	<div id="txt">JAVASCRIPT!</div>
+    </div>
+
+    <!-- use CDN libraries: preferred if you have web access -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+    
+    
+    <script>
+    	var txt = document.getElementById('txt');
+		
+		TweenLite.to(txt, 2, {x: 600, skewX:-30, ease:Bounce.easeOut} );
+    </script>
+</body>
+</html>

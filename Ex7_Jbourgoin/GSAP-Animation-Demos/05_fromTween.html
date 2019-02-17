@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>GSAP Demos</title>
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 110%;
+		}
+		#container {
+			width: 700px;
+			height: 200px;
+			background-color: steelblue;
+			margin: 40px auto;
+			opacity: 1;
+			overflow: hidden;
+		}
+		#txt1 {
+			font-size: 3em;
+			font-weight: bold;
+			width: inherit;
+			color: white;
+			text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+			text-align: center;
+		}
+		
+	</style>
+	
+</head>
+
+<body>
+
+	<div id="container">
+		<div id="txt1"></div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+
+	<script>
+		
+	var idContainer = document.getElementById("container")	
+	var idTxt1 = document.getElementById("txt1");
+		
+	/* add text to div after the HTML is loaded so the text doesn't
+	   display momentarily */
+		
+	idTxt1.textContent = "JavaScript Rules!";   
+		
+		
+	TweenLite.from(idTxt1, 1.5, { x: -700, ease:Back.easeOut } );
+	TweenLite.to(idTxt1, 1.5, {delay:2, x: 700, ease:Back.easeIn } );
+	
+	</script>
+</body>
+</html>
