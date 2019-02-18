@@ -14,10 +14,11 @@
         []- item2
         []- item3
       []- SAVE BUTTON
+        []- localStorage (Module 3)
       []-FIX FOOTER
 
       END GAME:
-      []- IF PLAYER HAS ALL THREE ITEMS, AND THEN MOVES TO MAP[6] "Use Hit Cat Powers"
+      []- IF PLAYER HAS ALL THREE ITEMS, AND THEN MOVES TO MAP[6] a button appears"Use Hit Cat Powers"
 */
 
 
@@ -325,6 +326,7 @@ function useItem()
      {
        case "satcom device": //satcom action
          gameMessage = "A terminal window opens with a connection to a sattelite scanning for the next best move  .. more story ";
+         //maybe add satcom function here
          break;
 
        case "sword":
