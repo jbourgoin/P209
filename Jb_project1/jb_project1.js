@@ -3,37 +3,32 @@
       []- ENTER BUTTON RETURN KEYBOARD BUTTON FUNCTION
       []- WRITE CYBER CAT STORY BASED ON IMAGE MAP
         [x]- REWORK IMAGES IF NECESSARY
-      []- MINIMAP
-        []- function/directives w/in RENDER() function
-          []- move cybercat img to mapLocation div
-            //Render Minimap location  
-            var miniCat = map[mapLocation];
-            document.getElementById(map[mapLocation]).src === cyberCatImage;
+      [x]- MINIMAP
+        [-]- Render Minimap location  - trouble clearing past move..
       []- AFTER ITEM PICK UP - DIV SHOWS
         []- satcom: directional info 
         []- item2
         []- item3
       []- SAVE BUTTON
         []- localStorage (Module 3)
-      []-FIX FOOTER
+      [x]-FIX FOOTER
 
       END GAME:
       []- IF PLAYER HAS ALL THREE ITEMS, AND THEN MOVES TO MAP[6] a button appears"Use Hit Cat Powers"
 */
 
-
 //Create the map
 var map = [];
 
 map[0] = "An old stone keep."; //blade runner city-scape 
-map[1] = "Spyder's hideout out in the badlands outside of Megacity One."; //ITEM spyder's hideout
+map[1] = "Spyder's hideout out in the badlands."; //ITEM spyder's hideout
 map[2] = "A sunny glade."; //green city plaza
 map[3] = "A sleeping dragon."; // catnip and enemies on cybercat's trail?
-map[4] = "A narrow pathway."; //cybercat looking over the city
-map[5] = "An ancient gate."; //cybercat meets w/ suzie
+map[4] = "A narrow pathway, a rainy ledge, it doesn't matter to the crime-fighting cybercat."; //cybercat looking over the city
+map[5] = "An ancient gate."; //cybercat meets w/ suzie - suzie warns of mickey (need a gangster name)
 map[6] = "The edge of a river."; //ITEM -- Mickey's end final boss fight
 map[7] = "A lonely wooden bench."; //cybercat follows his robot detective compainion
-map[8] = "An isolated cottage. Faint music comes from inside."; //ITEM
+map[8] = "An isolated techno-cottage. Faint music comes from inside but no owner insight.. a sword leaning on the wall near the window. It could be useful against mickey.."; //ITEM
 
 //Set the player's start location
 var mapLocation = 4;
@@ -115,16 +110,21 @@ var input = document.querySelector("#input");
 var button = document.querySelector("button");
 button.style.cursor = "pointer";
 button.addEventListener("click", clickHandler, false);
+//
+var saveButton = document.querySelector("#save");
+saveButton.addEventListener("click",saveInfo);
+//
+var restoreButton = document.querySelector("#restore");
+restoreButton.addEventListener("click",restoreInfo);
+//
+var restoredMapLocation = localStorage.getItem("theMapLocation");
 
 //set cat to location 4
 //artist credit: http://static1.squarespace.com/static/540a27e8e4b042802a33c882/540a29abe4b0b3642fee510b/597906322e69cf530f535725/1501103706046/catBoarding.png
 var cyberCatImage = "../Jb_project1/imgs/cat.png"
 
-//minimapLocation
-// mini map isn't finished it's broken.
-
-
-
+//notes is for output
+var notes=document.getElementById("notes");
 
 //Display the player's location
 render();
@@ -330,7 +330,7 @@ function useItem()
          break;
 
        case "sword":
-         if(mapLocation === 3)
+         if(mapLocation === 3)//should slay mickey
          {
            gameMessage = "You swing the sword and slay the dragon!";
          }
@@ -364,9 +364,19 @@ function render()
    output.innerHTML = map[mapLocation];
    image.src = "../Jb_project1/imgs" + images[mapLocation];
 
+   //minimapLocation
+   //
+   // mini map isn't finished it's broken.
+   var miniCat = "miniCat_"+ mapLocation;
+   var minimapCat = document.getElementById(miniCat);
+   var miniCells = document.getElementsByClassName("cell");
+   minimapCat.src = "../Jb_project1/imgs/cybercat.png";
    //minimap render location
-   var minimapCat = document.getElementById(map[mapLocation]);
-   minimapCat.style.backgroundImage = "url('')"
+   //
+   //sets minimapCat Location
+
+
+
 
    //Display an item if there's one in this location
    //1. Loop through all the game items
@@ -377,9 +387,9 @@ function render()
      {
        //Display it
        output.innerHTML
-       += "<br><br>You see a<strong>"
+       += "<br><br>You see a <strong>"
        + items[i]
-       + "</strong>here."
+       + "</strong> here."
      }
    }
 
@@ -391,4 +401,26 @@ function render()
    {
      output.innerHTML += "<br><br>You are carrying: " + backpack.join(", ");
    }
+}
+
+function saveInfo(){
+  "use strict";
+
+  var theMapLocation = mapLocation;
+  //var backpackBag = backpack;
+
+  localStorage.setItem("theMapLocation",theMapLocation);
+  //localStorage.setItem("theBackpackBag",backpackBag);
+
+  notes.innerHTML = "Map location saved: "+theMapLocation;
+}
+
+function restoreInfo(){
+  "use strict";
+
+  notes.innerHTML = "Restoring from a previous map location: " + restoredMapLocation;
+
+  // this breaks the game.. no fun. :(
+  //mapLocation = restoredMapLocation;
+  //playGame();
 }
