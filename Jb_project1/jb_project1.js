@@ -1,6 +1,6 @@
 /*  >>= TODO ==>
       [x]- ARTIST CREDIT
-      []- ENTER BUTTON RETURN KEYBOARD BUTTON FUNCTION
+      [x]- ENTER BUTTON RETURN KEYBOARD BUTTON FUNCTION
       []- WRITE CYBER CAT STORY BASED ON IMAGE MAP
         [x]- REWORK IMAGES IF NECESSARY
       [x]- MINIMAP
@@ -9,8 +9,8 @@
         []- satcom: directional info 
         []- item2
         []- item3
-      []- SAVE BUTTON
-        []- localStorage (Module 3)
+      [x]- SAVE BUTTON
+        [x]- localStorage (Module 3)
       [x]-FIX FOOTER
 
       END GAME:
@@ -116,8 +116,6 @@ saveButton.addEventListener("click",saveInfo);
 //
 var restoreButton = document.querySelector("#restore");
 restoreButton.addEventListener("click",restoreInfo);
-//
-var restoredMapLocation = localStorage.getItem("theMapLocation");
 
 //set cat to location 4
 //artist credit: http://static1.squarespace.com/static/540a27e8e4b042802a33c882/540a29abe4b0b3642fee510b/597906322e69cf530f535725/1501103706046/catBoarding.png
@@ -136,6 +134,7 @@ function clickHandler()
 
 function playGame()
 {
+  event.preventDefault();
    //Get the player's input and convert it to lowercase
    playersInput = input.value;
    playersInput = playersInput.toLowerCase();
@@ -365,11 +364,10 @@ function render()
    image.src = "../Jb_project1/imgs" + images[mapLocation];
 
    //minimapLocation
-   //
+   //  >--> form reset ??
    // mini map isn't finished it's broken.
    var miniCat = "miniCat_"+ mapLocation;
    var minimapCat = document.getElementById(miniCat);
-   var miniCells = document.getElementsByClassName("cell");
    minimapCat.src = "../Jb_project1/imgs/cybercat.png";
    //minimap render location
    //
@@ -406,6 +404,7 @@ function render()
 function saveInfo(){
   "use strict";
 
+  event.preventDefault();
   var theMapLocation = mapLocation;
   //var backpackBag = backpack;
 
@@ -418,9 +417,11 @@ function saveInfo(){
 function restoreInfo(){
   "use strict";
 
-  notes.innerHTML = "Restoring from a previous map location: " + restoredMapLocation;
+  event.preventDefault();
+  mapLocation = parseInt(localStorage.getItem("theMapLocation"));
+  notes.innerHTML = "Restoring from a previous map location: " + mapLocation;
 
-  // this breaks the game.. no fun. :(
-  //mapLocation = restoredMapLocation;
-  //playGame();
+playGame();
 }
+
+// mickeythe glove
