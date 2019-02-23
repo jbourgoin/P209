@@ -17,7 +17,6 @@ img {
 }
 
 #notes {
- border: 2px solid black;
  margin: 0px 179px;
  text-align: left;
  width: 840px;
@@ -26,12 +25,13 @@ img {
  position: relative;
 }
 
+
+/*MINI MAP CSS CONTROLLS*/
 #minimap {
 position: absolute;
 border: 1px solid black;
 }
 
-/*MINI MAP CSS CONTROLLS*/
 .grid {
 border: 1px solid black;
 display: table;
@@ -54,15 +54,3 @@ bottom: 0;
 left: 0;
 width: 100%;
 }
-
-/*  >>= TODO ==>
-      []- IMG 0:
-      []- IMG 1:
-      []- IMG 2: -  is really big
-      []- IMG 3: 
-      []- IMG 4:
-      []- IMG 5:
-      []- IMG 6:
-      []- IMG 7:
-      []- IMG 8:
-*/

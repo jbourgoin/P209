@@ -1,37 +1,53 @@
 /*  >>= TODO ==>
       [x]- ARTIST CREDIT
       [x]- ENTER BUTTON RETURN KEYBOARD BUTTON FUNCTION
-      []- WRITE CYBER CAT STORY BASED ON IMAGE MAP
-        [x]- REWORK IMAGES IF NECESSARY
-      [x]- MINIMAP
+      [x]- WRITE CYBER CAT STORY BASED ON IMAGE MAP
+        [X] - SET STAGE AT MAP START
+        [x]- REWORK IMAGES 
+      [x]- MINIMAP <- Extra Puzzle Element
         [-]- Render Minimap location  - trouble clearing past move..
       []- AFTER ITEM PICK UP - DIV SHOWS
-        []- satcom: directional info 
-        []- item2
-        []- item3
+        [X]- satcom: directional info 
+        [x]- Laser-sword: atk weap
+        [x]- catnip
       [x]- SAVE BUTTON
         [x]- localStorage (Module 3)
       [x]-FIX FOOTER
 
       END GAME:
-      []- IF PLAYER HAS ALL THREE ITEMS, AND THEN MOVES TO MAP[6] a button appears"Use Hit Cat Powers"
+      [X]- IF PLAYER HAS LASER-SWORD & SATCOM DEVICE, AND IS AT MAP[6], AND MICKEY HAS BEEN SLAIN.
+
+      1. [x]- E,w,n,s text entry
+      2. [x]- Must be able to pick up 3 items
+      3. [x]- LocalStorage
+      4. [X]- Extra puzzle feature
+      5. [x]- ES6
+      6. [x]- Use CSS for screen manipulation
+      7. [x]- Img for each area
+      8. [x]- Project follows the reading material
+      9. [x]- Use CSS, JavaScript & HTML only, no JS libraries.
+      10. [x]- Format and Comment your code
+      11. [x]- Provide a cheatsheet
+      12. []- Submit Via Github
 */
 
 //Create the map
 var map = [];
-
-map[0] = "An old stone keep."; //blade runner city-scape 
-map[1] = "Spyder's hideout out in the badlands."; //ITEM spyder's hideout
-map[2] = "A sunny glade."; //green city plaza
-map[3] = "A sleeping dragon."; // catnip and enemies on cybercat's trail?
-map[4] = "A narrow pathway, a rainy ledge, it doesn't matter to the crime-fighting cybercat."; //cybercat looking over the city
-map[5] = "An ancient gate."; //cybercat meets w/ suzie - suzie warns of mickey (need a gangster name)
-map[6] = "The edge of a river."; //ITEM -- Mickey's end final boss fight
-map[7] = "A lonely wooden bench."; //cybercat follows his robot detective compainion
+map[0] = "An old stone keep. A brick and mortor building. A glass and steel skyscraper. A cursed city stretching from Old Las Vegas to Nevada City, an unbroken concrete landscape. Nearly a billion people living in these colossal city structures. Not much really here, just poeple trapped indoors."; //blade runner city-scape 
+map[1] = "Spyder's hideout out in the badlands. Spyder says there's an old Satcom device on the back bench I can use.. I should do what Spyder says.."; //ITEM spyder's hideout
+map[2] = "At Sunny Glade Sushi Cybercat feasts and searches on for Mickey two'Gloves. <br/>\" there doesn't seem to be anything here\" you thought. It's time to meet Suzie is south of here.. "; //satcom
+map[3] = "Suzie helps out Cybercat by picking up crypto-catnip. Suzie said there some goons tailing her on the way out of Mama Sbarro's. "; // catnip and enemies on suzie's trail?
+map[4] = "A narrow pathway, a rainy ledge, it doesn't matter to Cybercat. With my cybernetic enhancements and my netrunning abilities no villain nor evil-doer is a match for me!<br/><br/>    Our current mission is to find and take down the Mob Boss: <strong>Mickey two'Gloves</strong>."; //cybercat looking over the city
+map[5] = "An ancient gate once golden, stretching over a large expanse of water, across from the colossal structure a city in ruins. Suzie tosses the catnip bag to you and said to be careful of Mickey two'Gloves."; //cybercat meets w/ suzie - suzie warns of mickey two'Gloves
+map[6] = "The edge of a small world is where you meet mickey two'Gloves, he'd waiting... With an edgy declaration to his thugs making it sound as if this was an honor duel. He puts a hand out grabbing his junker-steel claymore. In a quick charge Mickey was swinging down at CyberCat!"; //ITEM -- Mickey's end final boss fight
+map[7] = "A lonely wooden bench is where you meet your cyborg detective friend. Cybercat worries about him, he's always working on this one case but never seems to make any progress. Your Satcom device blinks rapidly!"; //cybercat follows his robot detective compainion
 map[8] = "An isolated techno-cottage. Faint music comes from inside but no owner insight.. a sword leaning on the wall near the window. It could be useful against mickey.."; //ITEM
 
 //Set the player's start location
 var mapLocation = 4;
+
+//Mob Boss Mickey Two Gloves. Is the mission complete?
+var mickeyTwoGloves = false;
 
 //Set the images
 var images = [];
@@ -63,7 +79,6 @@ images[7] = "/streets.jpg";
 //artist credit: https://www.reddit.com/r/Cyberpunk/comments/aqbx9n/cyberpunk_room_by_adrian_marc/
 images[8] = "/suspect_apt.jpg";
 
-
 //Set the blocked-path messages
 var blockedPathMessages = [];
 blockedPathMessages[0] = "It's too dangerous to move that way.";
@@ -77,8 +92,8 @@ blockedPathMessages[7] = "The trees are too thick to pass.";
 blockedPathMessages[8] = "You're too scared to go that way.";
 
 //Create the items and set their locations
-var items = ["satcom device", "stone", "sword"];
-var itemLocations = [1, 6, 8];
+var items = ["satcom device", "catnip", "laser-sword"]; //catnip
+const itemLocations = [1, 5, 8];
 
 //An array to store what the player is carrying
 var backpack = [];
@@ -96,15 +111,15 @@ var action = "";
 
 //An array of items the game understands
 //and a variable to store the current item
-var itemsIKnow = ["satcom device", "stone", "sword"];
+var itemsIKnow = ["satcom device", "catnip", "laser-sword"];  //catnip
 var item = "";
 
 //The img element
 var image = document.querySelector("img");
 
 //The input and output fields
-var output = document.querySelector("#output");
-var input = document.querySelector("#input");
+const output = document.querySelector("#output");
+const input = document.querySelector("#input");
 
 //The button
 var button = document.querySelector("button");
@@ -116,10 +131,17 @@ saveButton.addEventListener("click",saveInfo);
 //
 var restoreButton = document.querySelector("#restore");
 restoreButton.addEventListener("click",restoreInfo);
+//
+var hints = document.querySelector("#hints");
+hints.addEventListener("click",hintAlert);
 
 //set cat to location 4
 //artist credit: http://static1.squarespace.com/static/540a27e8e4b042802a33c882/540a29abe4b0b3642fee510b/597906322e69cf530f535725/1501103706046/catBoarding.png
 var cyberCatImage = "../Jb_project1/imgs/cat.png"
+
+//Satcom messages
+var satcommsgr = document.querySelector("#satcommsg");
+var satcommsg = "";
 
 //notes is for output
 var notes=document.getElementById("notes");
@@ -135,6 +157,8 @@ function clickHandler()
 function playGame()
 {
   event.preventDefault();
+  
+  endGame();
    //Get the player's input and convert it to lowercase
    playersInput = input.value;
    playersInput = playersInput.toLowerCase();
@@ -274,7 +298,7 @@ function dropItem()
      {
 
       //Tell the player that the item has been dropped
-      gameMessage = "You drop the " + item + ".";
+      gameMessage = "You use the " + item + ".";
 
       //Add the item from the backpack to the game world
       items.push(backpack[backpackIndexNumber]);
@@ -324,33 +348,39 @@ function useItem()
      switch(item)
      {
        case "satcom device": //satcom action
-         gameMessage = "A terminal window opens with a connection to a sattelite scanning for the next best move  .. more story ";
-         //maybe add satcom function here
+         gameMessage = "A terminal window opens with a connection to a sattelite scanning for the next best move.";
+         if(mapLocation === 7){
+          satcommsgr.innerHTML = "<strong>Satcom terminal screen: </strong><br/>The detective said that Mickey's hideout is west of here. It's showtime Mickey!";
+         }
+         else{
+          satcommsgr.innerHTML = "<strong>Satcom terminal screen: </strong><br/>.. it's blinking but there doesn't seem to be any hints or new messages";
+         }
          break;
 
-       case "sword":
-         if(mapLocation === 3)//should slay mickey
+       case "laser-sword":
+         if(mapLocation === 6)//slay mickey
          {
-           gameMessage = "You swing the sword and slay the dragon!";
+           gameMessage = "You ignite your laser-sword down by your side, its blade hums in an all too shadowy place. You see two'Gloves double-handed attack like it was a planned meeting weeks in advance, the perks of cybernetic implants; cat-like reflexes. Lunging left, sort of falling, you bring your laser-sword up and inside Mickey's guard, his sword and hands fall to the ground. The day is won. ";
+           mickeyTwoGloves = true;
          }
          else
          {
-           gameMessage = "You swing the sword listlessly.";
+           gameMessage = "You laser-sword sputters and emits a small light... I guess it's more of a dagger isn't it?";
          }
          break;
 
-       case "stone":
-         if(mapLocation === 1)
+       case "catnip": //catnip
+         if(mapLocation === 5)
          {
-           gameMessage = "You drop the stone in the well.";
+           gameMessage = "With the bag in shreds you dive at the ground rubbing dry plant flakes all over. Your cybernetic enhancements are on the fritz causing you to dart back and forth in a zig-zag pattern! After a storm of twitches and frantic, your senses recover and you feel stronger, faster.."; //catnip
 
            //Remove the item from the player's backpack
            backpack.splice(backpackIndexNumber, 1);
          }
          else
          {
-           gameMessage //satcom action
-             = "You fumble with the stone in your pocket.";
+           gameMessage
+             = "You fumble with the catnip package failing to open it..."; //catnip
          }
          break;
       }
@@ -359,6 +389,9 @@ function useItem()
 
 function render()
 {
+
+  // check if game is won!
+   endGame();
    //Render the location
    output.innerHTML = map[mapLocation];
    image.src = "../Jb_project1/imgs" + images[mapLocation];
@@ -372,9 +405,6 @@ function render()
    //minimap render location
    //
    //sets minimapCat Location
-
-
-
 
    //Display an item if there's one in this location
    //1. Loop through all the game items
@@ -404,24 +434,48 @@ function render()
 function saveInfo(){
   "use strict";
 
+  // fixes reload issues
   event.preventDefault();
   var theMapLocation = mapLocation;
-  //var backpackBag = backpack;
-
+  //
+  //maps browser localStorage variables
+  //
   localStorage.setItem("theMapLocation",theMapLocation);
-  //localStorage.setItem("theBackpackBag",backpackBag);
-
+  
+  //Notes output
   notes.innerHTML = "Map location saved: "+theMapLocation;
 }
 
 function restoreInfo(){
   "use strict";
 
+  // fixes reload issues
   event.preventDefault();
+  //
+  //gets browser storage varaibles
   mapLocation = parseInt(localStorage.getItem("theMapLocation"));
   notes.innerHTML = "Restoring from a previous map location: " + mapLocation;
 
 playGame();
 }
 
-// mickeythe glove
+function endGame(){
+  "use strict";
+
+  // check to see if you're at Mickey's hideout and have killed him, and that you have two items.
+  if(mapLocation === 6 && mickeyTwoGloves){
+    gameMessage += "His thugs scatter and clammer about.<br/> Even with all the ruckus you hear your Satcom's subtle beeps and its dim holo-lights fill the lightless room:";
+    satcommsgr.innerHTML = "<strong>Satcom terminal screen: </strong><br/>Well Done Cybercat! You've taken out Mickey two'Gloves. Meet me at the loft for payment. Detective out! "
+    alert("You've Won great job!");
+  }
+}
+
+function hintAlert(){
+  "use strict";
+  let desc = "Your Mission: Find a mob boss named Mickey and kill him.\n\n";
+  let gameItems = "Game Items:\n\tLaser-Sword(room 9)\n\tCatnip(room 6)\n\tSatcom Device(room 2)\n";
+  let fastestRoute = "Fastest Route: Room 2 -> Room 9 -> Room 7";
+
+  alert(desc+gameItems+fastestRoute);
+
+}
