@@ -1,19 +1,30 @@
 /*  >>= TODO ==>
   []- Add more rooms so that the game should have at least 9 areas and no more than 20 areas. Allow the player to move between the rooms in a similar way that is described in the book.
+      []- QUESTION: - what does he mean when he says: "Allow the player to move between the rooms in a similar way that is described in the book?" ARRAYS??
 
   []- The player should continue to be able to type the direction they wish to move (for example: "east", "west", "north"). The game output should be part of the DOM, not as an alert or console.log.
 
   []- The user should be able to pick up at least five items, such as a key, a flashlight, a weapon, a candle, and use that item in another room.
+      []- ITEM:
+      []- ROOM:
 
-  []- The program needs a "save" option. This time it will save the player's current room and the items in their backpack. This may need to use json with the localstorage method depending on your approach.
+  []- The program needs a "save" option. This time it will save the player's current room and the items in their backpack. 
+      []- JSON OBJECT: use json with the localstorage method depending on your approach.
 
   []- Include a start screen, play screen, and end screen for when the game is over.
+      []- START SCREEN: Will need a start button that sets mapLocation=4  -  could animate start screen -> play screen
+      []- PLAY SCREEN:
+      []- GAMEOVER SCREEN:
 
   []- Continue to have images for each of the rooms. You may add an animation to a room or multiple rooms by using a JS library tool such as Greensock.
+      []- ANIMATION FOR A ROOM:
 
   []- Use jQuery, Greensock, or another library in your game. This can be used as an interface tool or as stated above, to simply add animation to one of the rooms.
+      []- ANIMATE SOMETHING: Maybe the gameover screen?
  
-  []- The primary part of your code should pass JSLint or eslint (https://eslint.org/ (Links to an external site.)Links to an external site.).  Note-if using js libraries prevents it from passing then you can separate that code out as needed in order to make it pass. The library code (jquery, Greensock, or whatever you may choose) does not have to pass JSLint. 
+  []- The primary part of your code should pass JSLint or eslint (https://eslint.org/ (Links to an external site.).  
+    Note-if using js libraries prevents it from passing then you can separate that code out as needed in order to make it pass. The library code 
+    (jquery, Greensock, or whatever you may choose) does not have to pass JSLint. 
 
   []- If you use JSLint then under options for assume. tolerate, and fudge, I will accept everything except for "in development".
 
@@ -26,6 +37,8 @@
     f) Optional: sperate your logic into cohesive units by using modules
 
   []- Add sound effects into at least one of the rooms. But you may add sound to multiple rooms and multiple items.
+
+
   []- Finally
     []- Format your code and comment your code.
 
@@ -171,15 +184,13 @@ function playGame()
    action = "";
 
    //Figure out the player's action
-   for(i = 0; i < actionsIKnow.length; i++)
-
-{
-  if(playersInput.indexOf(actionsIKnow[i]) !== -1)
-  {
-    action = actionsIKnow[i];
-    console.log("player's action: " + action);
-    break;
-  }
+   for(i = 0; i < actionsIKnow.length; i++){
+    if(playersInput.indexOf(actionsIKnow[i]) !== -1)
+    {
+      action = actionsIKnow[i];
+      console.log("player's action: " + action);
+      break;
+    }
 }
 
 //Figure out the item the player wants
