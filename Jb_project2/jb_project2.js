@@ -1,18 +1,20 @@
 /*  >>= TODO ==>
-  []- Add more rooms so that the game should have at least 9 areas and no more than 20 areas. Allow the player to move between the rooms in a similar way that is described in the book.
-      []- QUESTION: - what does he mean when he says: "Allow the player to move between the rooms in a similar way that is described in the book?" ARRAYS??
+  [x]- Add more rooms so that the game should have at least 9 areas and no more than 20 areas. Allow the player to move between the rooms in a similar way that is described in the book.
 
-  []- The player should continue to be able to type the direction they wish to move (for example: "east", "west", "north"). The game output should be part of the DOM, not as an alert or console.log.
+  [x]- The player should continue to be able to type the direction they wish to move (for example: "east", "west", "north"). The game output should be part of the DOM, not as an alert or console.log.
 
-  []- The user should be able to pick up at least five items, such as a key, a flashlight, a weapon, a candle, and use that item in another room.
-      []- ITEM:
-      []- ROOM:
+  [x]- The user should be able to pick up at least five items, such as a key, a flashlight, a weapon, a candle, and use that item in another room.
+      [x]- ITEM: microchip
+      [x]- ROOM: is in room 7 - is used in room: 1
+      [x]- ITEM: holographic cat toy
+      [x]- ROOM: is in room 2 - is used in room: 4
 
-  []- The program needs a "save" option. This time it will save the player's current room and the items in their backpack. 
-      []- JSON OBJECT: use json with the localstorage method depending on your approach.
+  [x]- The program needs a "save" option. This time it will save the player's current room and the items in their backpack. 
+      [x]- JSON OBJECT: use json with the localstorage method depending on your approach.
 
   []- Include a start screen, play screen, and end screen for when the game is over.
       []- START SCREEN: Will need a start button that sets mapLocation=4  -  could animate start screen -> play screen
+        start screen fades away, to maplocation 4 and also start screen doesn't have vieweroutput / notes text
       []- PLAY SCREEN:
       []- GAMEOVER SCREEN:
 
@@ -22,7 +24,7 @@
   []- Use jQuery, Greensock, or another library in your game. This can be used as an interface tool or as stated above, to simply add animation to one of the rooms.
       []- ANIMATE SOMETHING: Maybe the gameover screen?
  
-  []- The primary part of your code should pass JSLint or eslint (https://eslint.org/ (Links to an external site.).  
+  []- The primary part of your code should pass JSLint or eslint (https://eslint.org/).  
     Note-if using js libraries prevents it from passing then you can separate that code out as needed in order to make it pass. The library code 
     (jquery, Greensock, or whatever you may choose) does not have to pass JSLint. 
 
@@ -37,7 +39,7 @@
     f) Optional: sperate your logic into cohesive units by using modules
 
   []- Add sound effects into at least one of the rooms. But you may add sound to multiple rooms and multiple items.
-
+    []- laser sword or meow catnip
 
   []- Finally
     []- Format your code and comment your code.
@@ -64,6 +66,10 @@ var mapLocation = 4;
 
 //Mob Boss Mickey Two Gloves. Is the mission complete?
 var mickeyTwoGloves = false;
+
+// current game to save
+var saveGame = {};
+var restoreGame = {};
 
 //Set the images
 var images = [];
@@ -108,8 +114,8 @@ blockedPathMessages[7] = "The trees are too thick to pass.";
 blockedPathMessages[8] = "You're too scared to go that way.";
 
 //Create the items and set their locations
-var items = ["satcom device", "catnip", "laser-sword"]; //catnip
-const itemLocations = [1, 5, 8];
+var items = ["satcom device", "catnip", "laser-sword", "microchip", "holographic cat toy"];
+const itemLocations = [1, 5, 8, 7, 2];
 
 //An array to store what the player is carrying
 var backpack = [];
@@ -127,7 +133,7 @@ var action = "";
 
 //An array of items the game understands
 //and a variable to store the current item
-var itemsIKnow = ["satcom device", "catnip", "laser-sword"];  //catnip
+var itemsIKnow = ["satcom device", "catnip", "laser-sword", "microchip","holographic cat toy"];
 var item = "";
 
 //The img element
@@ -137,19 +143,26 @@ var image = document.querySelector("img");
 const output = document.querySelector("#output");
 const input = document.querySelector("#input");
 
-//The button
+//The buttons
 var button = document.querySelector("button");
 button.style.cursor = "pointer";
 button.addEventListener("click", clickHandler, false);
 //
 var saveButton = document.querySelector("#save");
+saveButton.style.cursor = "pointer";
 saveButton.addEventListener("click",saveInfo);
 //
 var restoreButton = document.querySelector("#restore");
+restoreButton.style.cursor = "pointer";
 restoreButton.addEventListener("click",restoreInfo);
 //
 var hints = document.querySelector("#hints");
+hints.style.cursor = "pointer";
 hints.addEventListener("click",hintAlert);
+//
+var startButton = document.querySelector("#start");
+startButton.style.cursor = "pointer";
+startButton.addEventListener("click",startGame);
 
 //set cat to location 4
 //artist credit: http://static1.squarespace.com/static/540a27e8e4b042802a33c882/540a29abe4b0b3642fee510b/597906322e69cf530f535725/1501103706046/catBoarding.png
@@ -160,7 +173,7 @@ var satcommsgr = document.querySelector("#satcommsg");
 var satcommsg = "";
 
 //notes is for output
-var notes=document.getElementById("notes");
+var notes = document.getElementById("notes");
 
 //Display the player's location
 render();
@@ -174,7 +187,6 @@ function playGame()
 {
   event.preventDefault();
   
-  endGame();
    //Get the player's input and convert it to lowercase
    playersInput = input.value;
    playersInput = playersInput.toLowerCase();
@@ -189,6 +201,7 @@ function playGame()
     {
       action = actionsIKnow[i];
       console.log("player's action: " + action);
+      notes.innerHTML += "player's action: " + action +"<br/>";
       break;
     }
 }
@@ -200,6 +213,7 @@ for(i = 0; i < itemsIKnow.length; i++)
   {
     item = itemsIKnow[i];
     console.log("player's item: " + item);
+    notes.innerHTML +="player's item: " + item +"<br/>";
   }
 }
 
@@ -361,7 +375,7 @@ function useItem()
    {
      switch(item)
      {
-       case "satcom device": //satcom action
+       case "satcom device":
          gameMessage = "A terminal window opens with a connection to a sattelite scanning for the next best move.";
          if(mapLocation === 7){
           satcommsgr.innerHTML = "<strong>Satcom terminal screen: </strong><br/>The detective said that Mickey's hideout is west of here. It's showtime Mickey!";
@@ -372,7 +386,7 @@ function useItem()
          break;
 
        case "laser-sword":
-         if(mapLocation === 6)//slay mickey
+         if(mapLocation === 6)
          {
            gameMessage = "You ignite your laser-sword down by your side, its blade hums in an all too shadowy place. You see two'Gloves double-handed attack like it was a planned meeting weeks in advance, the perks of cybernetic implants; cat-like reflexes. Lunging left, sort of falling, you bring your laser-sword up and inside Mickey's guard, his sword and hands fall to the ground. The day is won. ";
            mickeyTwoGloves = true;
@@ -383,7 +397,7 @@ function useItem()
          }
          break;
 
-       case "catnip": //catnip
+       case "catnip":
          if(mapLocation === 5)
          {
            gameMessage = "With the bag in shreds you dive at the ground rubbing dry plant flakes all over. Your cybernetic enhancements are on the fritz causing you to dart back and forth in a zig-zag pattern! After a storm of twitches and frantic, your senses recover and you feel stronger, faster.."; //catnip
@@ -393,10 +407,32 @@ function useItem()
          }
          else
          {
-           gameMessage
-             = "You fumble with the catnip package failing to open it..."; //catnip
+           gameMessage = "You fumble with the catnip package failing to open it..."; 
          }
          break;
+
+         case "microchip":
+         if(mapLocation === 1)
+         {
+           gameMessage = "Spyder takes the microchip, examines it closely through a magnifier. \"Thanks little kitty! Where'd you get this?!\"";  
+         }
+         else
+         {
+           gameMessage = "The detective gave me this microchip but what do I do with it? Maybe Spyder wil know..";
+         }
+         break;
+
+       case "holographic cat toy":
+        if(mapLocation === 4)
+        {
+          gameMessage = "You playfully bat at the holographic image projected by the cat toy from the skyscraper rooftop.";
+        }
+        else
+        {
+          gameMessage = "This toy doesn't really do much..";
+        }
+        break;
+        
       }
    }
 }
@@ -406,19 +442,20 @@ function render()
 
   // check if game is won!
    endGame();
+
    //Render the location
    output.innerHTML = map[mapLocation];
    image.src = "../jb_project2/imgs" + images[mapLocation];
-
-   //minimapLocation
-   //  >--> form reset ??
-   // mini map isn't finished it's broken.
-   var miniCat = "miniCat_"+ mapLocation;
-   var minimapCat = document.getElementById(miniCat);
-   minimapCat.src = "../jb_project2/imgs/cybercat.png";
-   //minimap render location
-   //
-   //sets minimapCat Location
+  
+  //  //minimapLocation
+  //  //  >--> form reset ??
+  //  // mini map isn't finished it's broken.
+  //  var miniCat = "miniCat_"+ mapLocation;
+  //  var minimapCat = document.getElementById(miniCat);
+  //  minimapCat.src = "../jb_project2/imgs/cybercat.png";
+  //  //minimap render location
+  //  //
+  //  //sets minimapCat Location
 
    //Display an item if there's one in this location
    //1. Loop through all the game items
@@ -450,14 +487,14 @@ function saveInfo(){
 
   // fixes reload issues
   event.preventDefault();
-  var theMapLocation = mapLocation;
-  //
-  //maps browser localStorage variables
-  //
-  localStorage.setItem("theMapLocation",theMapLocation);
-  
-  //Notes output
-  notes.innerHTML = "Map location saved: "+theMapLocation;
+
+  //object property instatiation
+  saveGame.mapLocation = mapLocation;
+  saveGame.savedBackpack = backpack;
+
+  localStorage.setItem("saveGame",JSON.stringify(saveGame));
+  notes.innerHTML += "<br>Saving Map Location: "+saveGame.mapLocation+" and items you're carrying: "+saveGame.savedBackpack+".<br>";
+
 }
 
 function restoreInfo(){
@@ -465,11 +502,21 @@ function restoreInfo(){
 
   // fixes reload issues
   event.preventDefault();
-  //
-  //gets browser storage varaibles
-  mapLocation = parseInt(localStorage.getItem("theMapLocation"));
-  notes.innerHTML = "Restoring from a previous map location: " + mapLocation;
 
+  restoreGame = JSON.parse(localStorage.getItem("saveGame"));
+  //
+  if(restoreGame !== undefined)
+  {
+    mapLocation = parseInt(restoreGame.mapLocation);
+    backpack = restoreGame.savedBackpack;
+
+    notes.innerHTML = "Game restored!<br>";
+  }
+  else
+  {
+    notes.innerHTML = "<br>There's nothing to restore!<br>";
+  }
+  
 playGame();
 }
 
@@ -478,18 +525,34 @@ function endGame(){
 
   // check to see if you're at Mickey's hideout and have killed him, and that you have two items.
   if(mapLocation === 6 && mickeyTwoGloves){
-    gameMessage += "His thugs scatter and clammer about.<br/> Even with all the ruckus you hear your Satcom's subtle beeps and its dim holo-lights fill the lightless room:";
-    satcommsgr.innerHTML = "<strong>Satcom terminal screen: </strong><br/>Well Done Cybercat! You've taken out Mickey two'Gloves. Meet me at the loft for payment. Detective out! "
-    alert("You've Won great job!");
+    gameMessage += "His thugs scatter and clammer about.<br> Even with all the ruckus you hear your Satcom's subtle beeps and its dim holo-lights fill the lightless room:";
+    satcommsgr.innerHTML = "<strong>Satcom terminal screen: </strong><br>Well Done Cybercat! You've taken out Mickey two'Gloves. Meet me at the loft for payment. Detective out! "
+
+    //css animation to fade to game over screen
+    //
+    image.src = "../jb_project2/imgs/GameOver.png";
+
+
   }
 }
 
 function hintAlert(){
   "use strict";
+
+  // fixes reload issues
+  event.preventDefault();
   let desc = "Your Mission: Find a mob boss named Mickey and kill him.\n\n";
-  let gameItems = "Game Items:\n\tLaser-Sword(room 9)\n\tCatnip(room 6)\n\tSatcom Device(room 2)\n";
+  let gameItems = "Game Items:\n\t Laser-Sword(room 9)\n\t Catnip(room 6)\n\t Satcom Device(room 2)\n";
   let fastestRoute = "Fastest Route: Room 2 -> Room 9 -> Room 7";
 
   alert(desc+gameItems+fastestRoute);
 
+}
+
+function startGame() {
+
+  event.preventDefault();
+  image.src = "../jb_project2/imgs/title.png";
+  
+ 
 }
