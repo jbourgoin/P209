@@ -62,10 +62,14 @@ map[7] = "A lonely wooden bench is where you meet your cyborg detective friend. 
 map[8] = "An isolated techno-cottage. Faint music comes from inside but no owner insight.. a sword leaning on the wall near the window. It could be useful against mickey.."; //ITEM
 
 //Set the player's start location
-var mapLocation = 4;
+var mapLocation= 4;
 
 //Mob Boss Mickey Two Gloves. Is the mission complete?
 var mickeyTwoGloves = false;
+
+//game state control variable
+gameFinished = false;
+startGameLoop = false;
 
 // current game to save
 var saveGame = {};
@@ -175,8 +179,10 @@ var satcommsg = "";
 //notes is for output
 var notes = document.getElementById("notes");
 
+
 //Display the player's location
 render();
+
 
 function clickHandler()
 {
@@ -280,8 +286,10 @@ switch(action)
       gameMessage = "I don't understand that.";
   }
 
-  //Render the game
-  render();
+  if(gameFinished == false){
+    //Render the game to display the player's location
+    render();
+  }
 }
 
 function takeItem()
@@ -440,12 +448,22 @@ function useItem()
 function render()
 {
 
-  // check if game is won!
-   endGame();
+  if(startGameLoop == true){
+    // check if game is won!
+    endGame();
 
+   if(gameFinished == false){
    //Render the location
    output.innerHTML = map[mapLocation];
    image.src = "../jb_project2/imgs" + images[mapLocation];
+   }
+  }else{
+    mapLocation = 4;
+    output.innerHTML = map[mapLocation];
+    images.src = "../Jb_project2/imgs/title.png";
+  }
+
+
   
   //  //minimapLocation
   //  //  >--> form reset ??
@@ -550,9 +568,13 @@ function hintAlert(){
 }
 
 function startGame() {
-
+  //game control variable
+  startGameLoop = true;
+  //browser reload isues
   event.preventDefault();
-  image.src = "../jb_project2/imgs/title.png";
-  
+  //mickey is alive, mission complete = false
+  mickeyTwoGloves = false;
+  image.src = "../Jb_project2/imgs/title.png";
+  //"../Jb_project2/imgs"+images[mapLocation];
  
 }
