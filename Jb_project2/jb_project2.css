@@ -13,8 +13,13 @@ body {
  visibility: none;
 }
 
+#helpinfo{
+float: right;
+}
+
 #viewerOutput {
-    
+    margin-left: 5px;
+    width: 1020px;
 }
 
 #notes {
